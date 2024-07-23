@@ -1,12 +1,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { createRequire } from 'node:module'
 
-import glob from 'glob'
-
-import { Plugin, PluginImpl } from 'rollup'
+import type { Plugin, PluginImpl } from 'rollup'
 import { createFilter } from '@rollup/pluginutils'
 
-import { RollupStaticImportPluginOptions } from '../types'
+import type { RollupStaticImportPluginOptions } from '../types'
+// 使用 createRequire 来导入 CommonJS 模块
+const require = createRequire(import.meta.url);
+const glob = require('glob');
 
 const makePathAbsolute = (p: string, rootPath: string): string => {
   if (path.isAbsolute(p)) {
@@ -16,6 +18,7 @@ const makePathAbsolute = (p: string, rootPath: string): string => {
 }
 
 const staticImport: PluginImpl<RollupStaticImportPluginOptions> = options => {
+  // eslint-disable-next-line prefer-object-spread
   const pluginOptions = Object.assign({}, {
       include: [],
       exclude: [],

@@ -1,0 +1,10 @@
+snapshot*
+dist
+lib
+es
+esm
+node_modules
+static
+_site
+temp*
+static/
